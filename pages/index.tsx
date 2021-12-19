@@ -7,7 +7,7 @@ import clsx from "clsx";
 export default function Home(){
     return (
         <>
-            <div className={clsx('relative w-full h-screen -mt-16 z-[-10]')}>
+            <div className={clsx('relative w-full h-screen -mt-20 z-[-10]')}>
                 <div className={clsx('max-w-7xl m-auto pt-20')}>
                     <div>
                         <h1 id={'title'} className={clsx('text-5xl')}>Le beau titre</h1>
