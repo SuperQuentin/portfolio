@@ -37,6 +37,7 @@ export default function Navbar() {
 
 
   const handleScroll = () => {
+    isMobileShow ? setIsMobileShow(false) : null
     setScrollY(() => window.scrollY);
     setScreenHeight(() => window.innerHeight - 20);
     setChangeNavColor(() => scrollY >= screenHeight - 20);
