@@ -31,7 +31,7 @@ export default function Navbar() {
   });
 
   return (
-    <nav className={clsx("sticky top-0")}>
+    <nav className={clsx("sticky top-0 z-50")}>
       <div className={clsx("flex items-center justify-center flex-wrap p-3")}>
         {Object.keys(navRoute).map((route, index) => {
           return (
