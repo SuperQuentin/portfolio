@@ -1,7 +1,7 @@
-import type { NextPage } from "next";
 import DefaultLayout from "../components/layouts/DefaultLayout";
 import { ReactElement, useLayoutEffect, useState } from "react";
 import clsx from "clsx";
+import Image from "next/image";
 import BlogPost from "../components/BlogPost";
 
 export default function Home() {
@@ -16,12 +16,11 @@ export default function Home() {
             <p className={clsx("text-xl")}>la belle description</p>
           </div>
         </div>
-        <img
-          className={clsx(
+        <div className={clsx(
             "absolute w-screen h-screen object-cover inset-0 opacity-80 z-[-10]"
-          )}
-          src={"/giphy.gif"}
-        />
+          )}>
+            <Image layout={"fill"} objectFit={"cover"} src={"/giphy.gif"} alt="background-image" />
+        </div>
       </div>
       <div className={clsx("min-h-screen")}>
         <div className={clsx("max-w-7xl h-full m-auto space-y-8 py-16 px-4")}>
@@ -32,7 +31,7 @@ export default function Home() {
           >
             Articles du blog
           </div>
-          <div className={clsx("w-full grid grid-cols-3 gap-4")}>
+          <div className={clsx("w-full flex flex-col p-4 space-y-4 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-4")}>
             <BlogPost />
             <BlogPost />
             <BlogPost />
