@@ -87,69 +87,99 @@ export default function Home({
           >
             Articles du blog
           </div>
-          <div
-            className={clsx(
-              "w-full flex flex-col p-4 space-y-4 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-4"
-            )}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            variants={{
+              visible: {
+                opacity: 1,
+                transition: {
+                  when: "beforeChildren",
+                  staggerChildren: 0.15,
+                },
+              },
+              hidden: {
+                opacity: 0,
+                transition: {
+                  when: "afterChildren",
+                },
+              },
+            }}
           >
-            {blogPosts.map((post) => {
-              const blogPost = {};
-              const page = post.child_page.page;
-              blogPost.id = page.id;
-              blogPost.title = page.properties.title.title[0].text.content;
-              blogPost.cover = page.cover[page.cover.type].url;
+            <div
+              className={clsx(
+                "w-full flex flex-col p-4 space-y-4 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-4"
+              )}
+            >
+              {blogPosts.map((post) => {
+                const blogPost = {};
+                const page = post.child_page.page;
+                blogPost.id = page.id;
+                blogPost.title = page.properties.title.title[0].text.content;
+                blogPost.cover = page.cover[page.cover.type].url;
 
-              blogPost.icon = [];
+                blogPost.icon = [];
 
-              if ("file" in page.icon) {
-                blogPost.icon.push("file");
-                blogPost.icon.push(page.icon.file.url);
-              }
-              if ("emoji" in page.icon) {
-                blogPost.icon.push("emoji");
-                blogPost.icon.push(page.icon.emoji);
-              }
-
-              blogPost.description = post.child_page.content.results.find(
-                (block: any, index: number, array: Array<object>) => {
-                  return (
-                    block.type === "paragraph" &&
-                    array[index - 1].type === "heading_1" &&
-                    array[
-                      index - 1
-                    ].heading_1.text[0].text.content.toLowerCase() ===
-                      "introduction"
-                  );
+                if ("file" in page.icon) {
+                  blogPost.icon.push("file");
+                  blogPost.icon.push(page.icon.file.url);
                 }
-              ).paragraph.text[0].text.content;
+                if ("emoji" in page.icon) {
+                  blogPost.icon.push("emoji");
+                  blogPost.icon.push(page.icon.emoji);
+                }
 
-              return (
-                <BlogPost
-                  key={blogPost.title}
-                  id={blogPost.id}
-                  title={blogPost.title}
-                  description={blogPost.description}
-                  icon={blogPost.icon}
-                  cover={blogPost.cover}
-                />
-              );
-            })}
-          </div>
-          {blogPosts !== undefined ? (
-            <div className={clsx("flex justify-center")}>
-              <Link href={"/blog"}>
-                <a
-                  className={clsx(
-                    "p-4 text-xl font-bold hover:text-orange-400"
-                  )}
-                >
-                  Voir plus
-                </a>
-              </Link>
+                blogPost.description = post.child_page.content.results.find(
+                  (block: any, index: number, array: Array<object>) => {
+                    return (
+                      block.type === "paragraph" &&
+                      array[index - 1].type === "heading_1" &&
+                      array[
+                        index - 1
+                      ].heading_1.text[0].text.content.toLowerCase() ===
+                        "introduction"
+                    );
+                  }
+                ).paragraph.text[0].text.content;
+
+                return (
+                  <BlogPost
+                    key={blogPost.title}
+                    id={blogPost.id}
+                    title={blogPost.title}
+                    description={blogPost.description}
+                    icon={blogPost.icon}
+                    cover={blogPost.cover}
+                    variants={{
+                      visible: { opacity: 1, y: 0 },
+                      hidden: { opacity: 0, y: -8 },
+                    }}
+                  />
+                );
+              })}
             </div>
-          ) : (
-            ""
-          )}
+            {blogPosts !== undefined ? (
+              <motion.div
+                variants={{
+                  visible: { opacity: 1, y: 0 },
+                  hidden: { opacity: 0, y: -8 },
+                }}
+                className={clsx("flex justify-center")}
+              >
+                <Link href={"/blog"}>
+                  <a
+                    className={clsx(
+                      "p-4 text-xl font-bold hover:text-orange-400"
+                    )}
+                  >
+                    Voir plus
+                  </a>
+                </Link>
+              </motion.div>
+            ) : (
+              ""
+            )}
+          </motion.div>
         </div>
 
         <div className={clsx("snap-start min-h-screen")}>
