@@ -37,8 +37,9 @@ export default function Home({
             <Image
               layout={"fill"}
               objectFit={"cover"}
-              src={"/giphy.gif"}
+              src={"/marcel-strauss-7DigijJqGlo-unsplash.jpg"}
               alt="background-image"
+              priority={true}
             />
           </div>
         </div>
