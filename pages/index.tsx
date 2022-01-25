@@ -4,15 +4,17 @@ import clsx from "clsx";
 import Image from "next/image";
 import BlogPost from "../components/BlogPost";
 import { BlogPostProps } from "../components/BlogPost";
-import Link from 'next/link'
+import Link from "next/link";
 
-
-import { SvgBlob } from 'react-svg-blob';
+import { SvgBlob } from "react-svg-blob";
 
 const { Client } = require("@notionhq/client");
 
-export default function Home({ blogPosts } : { blogPosts : Array<BlogPostProps>}) {
-
+export default function Home({
+  blogPosts,
+}: {
+  blogPosts: Array<BlogPostProps>;
+}) {
   return (
     <>
       <div className={"snap-mandatory snap-y"}>
@@ -20,10 +22,10 @@ export default function Home({ blogPosts } : { blogPosts : Array<BlogPostProps>}
           <div className={clsx("max-w-7xl m-auto h-full pt-20")}>
             <div className={clsx("flex justify-center items-center h-full")}>
               <div className={clsx("flex flex-col text-white")}>
-              <h1 id={"title"} className={clsx("text-7xl font-bold ")}>
-                Le beau titre
-              </h1>
-              <p className={clsx("text-3xl")}>blablabla</p>
+                <h1 id={"title"} className={clsx("text-7xl font-bold ")}>
+                  Le beau titre
+                </h1>
+                <p className={clsx("text-3xl")}>blablabla</p>
               </div>
             </div>
           </div>
@@ -48,7 +50,7 @@ export default function Home({ blogPosts } : { blogPosts : Array<BlogPostProps>}
         >
           <div
             className={clsx(
-              "text-3xl font-semibold border-b-4 border-red-500 max-w-fit pb-2"
+              "text-3xl font-semibold border-b-4 border-red-500 max-w-fit pb-2 ml-4"
             )}
           >
             Articles du blog
@@ -58,55 +60,71 @@ export default function Home({ blogPosts } : { blogPosts : Array<BlogPostProps>}
               "w-full flex flex-col p-4 space-y-4 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-4"
             )}
           >
+            {blogPosts.map((post) => {
+              const blogPost = {};
+              const page = post.child_page.page;
+              blogPost.id = page.id;
+              blogPost.title = page.properties.title.title[0].text.content;
+              blogPost.cover = page.cover[page.cover.type].url;
 
-            {
-              blogPosts.map(post => {
-                const blogPost = {}
-                const page = post.child_page.page
-                blogPost.id = page.id
-                blogPost.title = page.properties.title.title[0].text.content;
-                blogPost.cover = page.cover[page.cover.type].url;
+              blogPost.icon = [];
 
-                if ('file' in page.icon) {
-                  blogPost.icon = {
-                    type: 'file',
-                    content: page.icon.file.url
-                  }
+              if ("file" in page.icon) {
+                blogPost.icon.push("file");
+                blogPost.icon.push(page.icon.file.url);
+              }
+              if ("emoji" in page.icon) {
+                blogPost.icon.push("emoji");
+                blogPost.icon.push(page.icon.emoji);
+              }
+
+              blogPost.description = post.child_page.content.results.find(
+                (block: any, index: number, array: Array<object>) => {
+                  return (
+                    block.type === "paragraph" &&
+                    array[index - 1].type === "heading_1" &&
+                    array[
+                      index - 1
+                    ].heading_1.text[0].text.content.toLowerCase() ===
+                      "introduction"
+                  );
                 }
-                if ('emoji' in page.icon) {
-                  blogPost.icon = {
-                    type: 'emoji',
-                    content: page.icon.emoji
-                  };
-                }
+              ).paragraph.text[0].text.content;
 
-                blogPost.description = post.child_page.content.results.find((block: any, index: number, array: Array<object>) => {
-                  return block.type === 'paragraph'
-                    && array[index - 1].type === 'heading_1'
-                    && array[index - 1].heading_1.text[0].text.content.toLowerCase() === 'introduction';
-                }).paragraph.text[0].text.content;
-
-                return (<BlogPost key={blogPost.title} id={blogPost.id} title={blogPost.title} description={blogPost.description} icon={blogPost.icon} cover={blogPost.cover} />)
-              })
-            }
-
+              return (
+                <BlogPost
+                  key={blogPost.title}
+                  id={blogPost.id}
+                  title={blogPost.title}
+                  description={blogPost.description}
+                  icon={blogPost.icon}
+                  cover={blogPost.cover}
+                />
+              );
+            })}
           </div>
-          {
-            blogPosts !== undefined ? (
-              <div className={clsx('flex justify-center')}>
+          {blogPosts !== undefined ? (
+            <div className={clsx("flex justify-center")}>
               <Link href={"/blog"}>
-                <a className={clsx("p-4 text-xl font-bold hover:text-orange-400")}>Voir plus</a>
+                <a
+                  className={clsx(
+                    "p-4 text-xl font-bold hover:text-orange-400"
+                  )}
+                >
+                  Voir plus
+                </a>
               </Link>
-          </div>  
-            ) : ''
-          } 
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className={clsx("snap-start min-h-screen")}>
           <div className={"max-w-7xl h-full m-auto space-y-8 py-16 px-4"}>
             <div
               className={clsx(
-                "text-3xl font-semibold border-b-4 border-blue-500 max-w-fit pb-2"
+                "text-3xl font-semibold border-b-4 border-blue-500 max-w-fit pb-2 ml-4"
               )}
             >
               Parcours
@@ -118,8 +136,12 @@ export default function Home({ blogPosts } : { blogPosts : Array<BlogPostProps>}
                 }
               ></div>
 
-              { /** left timeline item */}
-              <div className={"flex md:flex-row-reverse md:justify-between items-center w-full"}>
+              {/** left timeline item */}
+              <div
+                className={
+                  "flex md:flex-row-reverse md:justify-between items-center w-full"
+                }
+              >
                 <div className={"order-1 w-5/12 hidden md:block"}></div>
                 <div
                   className={
@@ -132,9 +154,7 @@ export default function Home({ blogPosts } : { blogPosts : Array<BlogPostProps>}
                 </div>
                 <div className="order-1 relative w-5/12 flex-grow md:flex-grow-0 text-white z-10">
                   <div className="absolute inset-y-16 inset-x-24 flex flex-col justify-center items-center">
-                    <h3 className="mb-3 font-bold  text-xl">
-                      Apprentisage
-                    </h3>
+                    <h3 className="mb-3 font-bold  text-xl">Apprentisage</h3>
                     <p className="text-sm hidden md:block">
                       Lorem Ipsum is simply dummy text of the printing and
                       typesetting industry. Lorem Ipsum has been the industry's
@@ -143,11 +163,16 @@ export default function Home({ blogPosts } : { blogPosts : Array<BlogPostProps>}
                       type specimen book.
                     </p>
                   </div>
-                  <SvgBlob variant='solid' color='#00A65A' shapeProps={{ edges: 6 }} className={"-z-10 w-full"} />
+                  <SvgBlob
+                    variant="solid"
+                    color="#00A65A"
+                    shapeProps={{ edges: 6 }}
+                    className={"-z-10 w-full"}
+                  />
                 </div>
               </div>
 
-              { /** right timeline item */}
+              {/** right timeline item */}
               <div className={"flex md:justify-between items-center w-full"}>
                 <div className={"order-1 w-5/12 hidden md:block"}></div>
                 <div
@@ -172,12 +197,21 @@ export default function Home({ blogPosts } : { blogPosts : Array<BlogPostProps>}
                       type specimen book.
                     </p>
                   </div>
-                  <SvgBlob variant='solid' color='#383b99' shapeProps={{ edges: 7 }} className={"-z-10 w-full"} />
+                  <SvgBlob
+                    variant="solid"
+                    color="#383b99"
+                    shapeProps={{ edges: 7 }}
+                    className={"-z-10 w-full"}
+                  />
                 </div>
               </div>
 
-              { /** left timeline item */}
-              <div className={"flex md:flex-row-reverse md:justify-between items-center w-full"}>
+              {/** left timeline item */}
+              <div
+                className={
+                  "flex md:flex-row-reverse md:justify-between items-center w-full"
+                }
+              >
                 <div className={"order-1 w-5/12 hidden md:block"}></div>
                 <div
                   className={
@@ -201,11 +235,16 @@ export default function Home({ blogPosts } : { blogPosts : Array<BlogPostProps>}
                       type specimen book.
                     </p>
                   </div>
-                  <SvgBlob variant='solid' color='#003265' shapeProps={{ edges: 6 }} className={"-z-10 w-full"} />
+                  <SvgBlob
+                    variant="solid"
+                    color="#003265"
+                    shapeProps={{ edges: 6 }}
+                    className={"-z-10 w-full"}
+                  />
                 </div>
               </div>
 
-              { /** right timeline item */}
+              {/** right timeline item */}
               <div className={"flex md:justify-between items-center w-full"}>
                 <div className={"order-1 w-5/12 hidden md:block"}></div>
                 <div
@@ -230,12 +269,21 @@ export default function Home({ blogPosts } : { blogPosts : Array<BlogPostProps>}
                       type specimen book.
                     </p>
                   </div>
-                  <SvgBlob variant='solid' color='#00A65A' shapeProps={{ edges: 7 }} className={"-z-10 w-full"} />
+                  <SvgBlob
+                    variant="solid"
+                    color="#00A65A"
+                    shapeProps={{ edges: 7 }}
+                    className={"-z-10 w-full"}
+                  />
                 </div>
               </div>
 
-              { /** left timeline item */}
-              <div className={"flex md:flex-row-reverse md:justify-between items-center w-full"}>
+              {/** left timeline item */}
+              <div
+                className={
+                  "flex md:flex-row-reverse md:justify-between items-center w-full"
+                }
+              >
                 <div className={"order-1 w-5/12 hidden md:block"}></div>
                 <div
                   className={
@@ -259,11 +307,14 @@ export default function Home({ blogPosts } : { blogPosts : Array<BlogPostProps>}
                       type specimen book.
                     </p>
                   </div>
-                  <SvgBlob variant='solid' color='#DF00A9' shapeProps={{ edges: 6 }} className={"-z-10 w-full"} />
+                  <SvgBlob
+                    variant="solid"
+                    color="#DF00A9"
+                    shapeProps={{ edges: 6 }}
+                    className={"-z-10 w-full"}
+                  />
                 </div>
               </div>
-
-              
             </div>
           </div>
         </div>
@@ -284,26 +335,33 @@ export async function getStaticProps() {
   let blogPosts: Array<object> = [];
 
   const blockId = process.env.NOTION_SRC_BLOCK;
-  const response = await notion.blocks.children.list({ block_id: blockId, page_size: 4 }); //will get 3 elements
+  const response = await notion.blocks.children.list({
+    block_id: blockId,
+    page_size: 4,
+  }); //will get 3 elements
 
-  blogPosts = response.results.filter((post: any) => post.type === 'child_page');
+  blogPosts = response.results.filter(
+    (post: any) => post.type === "child_page"
+  );
 
-  const posts = await Promise.all(blogPosts.map(async post => {
-    const page = await notion.pages.retrieve({ page_id: post.id });
-    const content = await notion.blocks.children.list({ block_id: post.id });
-    return {
-      ...post,
-      child_page : {
-        page,
-        content
-      }
-    }
-  }))
+  const posts = await Promise.all(
+    blogPosts.map(async (post) => {
+      const page = await notion.pages.retrieve({ page_id: post.id });
+      const content = await notion.blocks.children.list({ block_id: post.id });
+      return {
+        ...post,
+        child_page: {
+          page,
+          content,
+        },
+      };
+    })
+  );
 
   return {
     props: {
-      blogPosts: posts
+      blogPosts: posts,
     },
-    revalidate: 10
-  }
-};
+    revalidate: 10,
+  };
+}
