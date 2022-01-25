@@ -76,7 +76,7 @@ export default function Home({
           </div>
           <div
             className={clsx(
-              "absolute w-full h-full object-cover inset-0 opacity-80 z-[-10]"
+              "absolute w-full h-full object-cover inset-0 z-[-10]"
             )}
           >
             <Image
