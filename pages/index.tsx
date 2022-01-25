@@ -13,6 +13,19 @@ import { SvgBlob } from "react-svg-blob";
 const { Client } = require("@notionhq/client");
 
 const msgWelcome = "Bienvenu sur mon portfolio";
+
+const blob = {
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { delay: 0.25 },
+  },
+  hidden: {
+    opacity: 0,
+    y: -18,
+    transition: { delay: 0.25 },
+  },
+};
 export default function Home({
   blogPosts,
 }: {
@@ -192,193 +205,99 @@ export default function Home({
             >
               Parcours
             </div>
-            <div className={clsx("mx-auto w-full h-full")}>
-              <div
-                className={
-                  "border-2-2 absolute border-opacity-20 border-gray-700 border h-full left-8 md:left-1/2"
-                }
-              ></div>
-
-              {/** left timeline item */}
-              <div
-                className={
-                  "flex md:flex-row-reverse md:justify-between items-center w-full"
-                }
-              >
-                <div className={"order-1 w-5/12 hidden md:block"}></div>
+            <motion.div>
+              <div className={clsx("relative mx-auto w-full h-full")}>
                 <div
                   className={
-                    "z-20  flex items-center order-1 bg-slate-800 shadow-xl w-8 h-8 rounded-full"
+                    "border-2-2 absolute border-opacity-20 border-gray-700 border h-full left-8 md:left-1/2"
                   }
-                >
-                  <h2 className="mx-auto font-semibold text-lg text-white">
-                    1
-                  </h2>
-                </div>
-                <div className="order-1 relative w-5/12 flex-grow md:flex-grow-0 text-white z-10">
-                  <div className="absolute inset-y-16 inset-x-24 flex flex-col justify-center items-center">
-                    <h3 className="mb-3 font-bold  text-xl">Apprentisage</h3>
-                    <p className="text-sm hidden md:block">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book.
-                    </p>
-                  </div>
-                  <SvgBlob
-                    variant="solid"
-                    color="#00A65A"
-                    shapeProps={{ edges: 6 }}
-                    className={"-z-10 w-full"}
-                  />
-                </div>
-              </div>
+                ></div>
 
-              {/** right timeline item */}
-              <div className={"flex md:justify-between items-center w-full"}>
-                <div className={"order-1 w-5/12 hidden md:block"}></div>
-                <div
-                  className={
-                    "z-20  flex items-center order-1 bg-slate-800 shadow-xl w-8 h-8 rounded-full"
+                <Blob
+                  title="Apprentisage"
+                  content="blabla"
+                  position={1}
+                  variants={blob}
+                  blob={
+                    <SvgBlob
+                      variant="solid"
+                      shapeProps={{ edges: 6 }}
+                      className={
+                        "-z-10 w-full text-[#00A65A] group-hover:text-[#14633f] transition"
+                      }
+                    />
                   }
-                >
-                  <h2 className="mx-auto font-semibold text-lg text-white">
-                    2
-                  </h2>
-                </div>
-                <div className="order-1 relative w-5/12 flex-grow md:flex-grow-0 text-white z-10">
-                  <div className="absolute inset-y-16 inset-x-24 flex flex-col justify-center items-center">
-                    <h3 className="md:mb-3 font-bold  text-xl">
-                      Stage à l'école professionel commercial de Nyon
-                    </h3>
-                    <p className="text-sm hidden md:block">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book.
-                    </p>
-                  </div>
-                  <SvgBlob
-                    variant="solid"
-                    color="#383b99"
-                    shapeProps={{ edges: 7 }}
-                    className={"-z-10 w-full"}
-                  />
-                </div>
-              </div>
+                />
 
-              {/** left timeline item */}
-              <div
-                className={
-                  "flex md:flex-row-reverse md:justify-between items-center w-full"
-                }
-              >
-                <div className={"order-1 w-5/12 hidden md:block"}></div>
-                <div
-                  className={
-                    "z-20  flex items-center order-1 bg-slate-800 shadow-xl w-8 h-8 rounded-full"
+                <Blob
+                  title="Stage à l'EPCN"
+                  content="blabla"
+                  position={2}
+                  right={true}
+                  variants={blob}
+                  blob={
+                    <SvgBlob
+                      variant="solid"
+                      shapeProps={{ edges: 7 }}
+                      className={
+                        "-z-10 w-full text-[#383b99] group-hover:text-[#252885] transition"
+                      }
+                    />
                   }
-                >
-                  <h2 className="mx-auto font-semibold text-lg text-white">
-                    3
-                  </h2>
-                </div>
-                <div className="order-1 relative w-5/12 flex-grow md:flex-grow-0 text-white z-10">
-                  <div className="absolute inset-y-16 inset-x-24 flex flex-col justify-center items-center">
-                    <h3 className="mb-3 font-bold  text-xl">
-                      Stage chez Nagravision
-                    </h3>
-                    <p className="text-sm hidden md:block">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book.
-                    </p>
-                  </div>
-                  <SvgBlob
-                    variant="solid"
-                    color="#003265"
-                    shapeProps={{ edges: 6 }}
-                    className={"-z-10 w-full"}
-                  />
-                </div>
-              </div>
+                />
 
-              {/** right timeline item */}
-              <div className={"flex md:justify-between items-center w-full"}>
-                <div className={"order-1 w-5/12 hidden md:block"}></div>
-                <div
-                  className={
-                    "z-20  flex items-center order-1 bg-slate-800 shadow-xl w-8 h-8 rounded-full"
+                <Blob
+                  title="Stage chez Nagravision"
+                  content="blabla"
+                  position={3}
+                  right={false}
+                  variants={blob}
+                  blob={
+                    <SvgBlob
+                      variant="solid"
+                      shapeProps={{ edges: 6 }}
+                      className={
+                        "-z-10 w-full text-[#003265] group-hover:text-[#0d2741] transition"
+                      }
+                    />
                   }
-                >
-                  <h2 className="mx-auto font-semibold text-lg text-white">
-                    4
-                  </h2>
-                </div>
-                <div className="order-1 relative w-5/12 flex-grow md:flex-grow-0 text-white z-10">
-                  <div className="absolute inset-y-16 inset-x-24 flex flex-col justify-center items-center">
-                    <h3 className="md:mb-3 font-bold  text-xl">
-                      Technicien ES
-                    </h3>
-                    <p className="text-sm hidden md:block">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book.
-                    </p>
-                  </div>
-                  <SvgBlob
-                    variant="solid"
-                    color="#00A65A"
-                    shapeProps={{ edges: 7 }}
-                    className={"-z-10 w-full"}
-                  />
-                </div>
-              </div>
+                />
 
-              {/** left timeline item */}
-              <div
-                className={
-                  "flex md:flex-row-reverse md:justify-between items-center w-full"
-                }
-              >
-                <div className={"order-1 w-5/12 hidden md:block"}></div>
-                <div
-                  className={
-                    "z-20  flex items-center order-1 bg-slate-800 shadow-xl w-8 h-8 rounded-full"
+                <Blob
+                  title="Technicien ES"
+                  content="blabla"
+                  position={4}
+                  right={true}
+                  variants={blob}
+                  blob={
+                    <SvgBlob
+                      variant="solid"
+                      shapeProps={{ edges: 7 }}
+                      className={
+                        "-z-10 w-full text-[#00A65A] group-hover:text-[#14633f] transition"
+                      }
+                    />
                   }
-                >
-                  <h2 className="mx-auto font-semibold text-lg text-white">
-                    5
-                  </h2>
-                </div>
-                <div className="order-1 relative w-5/12 flex-grow md:flex-grow-0 text-white z-10">
-                  <div className="absolute inset-y-16 inset-x-24 flex flex-col justify-center items-center">
-                    <h3 className="mb-3 font-bold  text-xl">
-                      Stage chez Antistatique
-                    </h3>
-                    <p className="text-sm hidden md:block">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book.
-                    </p>
-                  </div>
-                  <SvgBlob
-                    variant="solid"
-                    color="#DF00A9"
-                    shapeProps={{ edges: 6 }}
-                    className={"-z-10 w-full"}
-                  />
-                </div>
+                />
+
+                <Blob
+                  title="Stage chez Antistatique"
+                  content="blabla"
+                  position={5}
+                  right={false}
+                  variants={blob}
+                  blob={
+                    <SvgBlob
+                      variant="solid"
+                      shapeProps={{ edges: 6 }}
+                      className={
+                        "-z-10 w-full text-[#DF00A9] group-hover:text-[#811c68] transition"
+                      }
+                    />
+                  }
+                />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
