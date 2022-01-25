@@ -1,11 +1,12 @@
 import DefaultLayout from "../components/layouts/DefaultLayout";
-import { ReactElement, useState, useEffect } from "react";
+import { ReactElement } from "react";
 import clsx from "clsx";
 import Image from "next/image";
 import BlogPost from "../components/BlogPost";
 import { BlogPostProps } from "../components/BlogPost";
 import Link from "next/link";
-import { motion, useViewportScroll } from "framer-motion";
+import { motion } from "framer-motion";
+import Blob from "../components/Blob";
 
 import { SvgBlob } from "react-svg-blob";
 
