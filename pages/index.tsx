@@ -5,11 +5,13 @@ import Image from "next/image";
 import BlogPost from "../components/BlogPost";
 import { BlogPostProps } from "../components/BlogPost";
 import Link from "next/link";
+import { motion, useViewportScroll } from "framer-motion";
 
 import { SvgBlob } from "react-svg-blob";
 
 const { Client } = require("@notionhq/client");
 
+const msgWelcome = "Bienvenu sur mon portfolio";
 export default function Home({
   blogPosts,
 }: {
@@ -22,10 +24,39 @@ export default function Home({
           <div className={clsx("max-w-7xl m-auto h-full pt-20")}>
             <div className={clsx("flex justify-center items-center h-full")}>
               <div className={clsx("flex flex-col text-white")}>
-                <h1 id={"title"} className={clsx("text-7xl font-bold ")}>
-                  Le beau titre
-                </h1>
-                <p className={clsx("text-3xl")}>blablabla</p>
+                <motion.h1
+                  id={"title"}
+                  initial="hidden"
+                  animate="visible"
+                  variants={{
+                    hidden: { opacity: 1 },
+                    visible: {
+                      opacity: 1,
+                      transition: {
+                        delay: 0.5,
+                        staggerChildren: 0.08,
+                      },
+                    },
+                  }}
+                  className={clsx("text-7xl font-bold ")}
+                >
+                  {msgWelcome.split("").map((char, index) => {
+                    return (
+                      <motion.span
+                        key={char + "-" + index}
+                        variants={{
+                          hidden: { visibility: "hidden", x: 32 },
+                          visible: {
+                            visibility: "initial",
+                            x: 0,
+                          },
+                        }}
+                      >
+                        {char}
+                      </motion.span>
+                    );
+                  })}
+                </motion.h1>
               </div>
             </div>
           </div>
