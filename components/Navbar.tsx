@@ -41,7 +41,6 @@ export default function Navbar() {
     setScrollY(() => window.scrollY);
     setScreenHeight(() => window.innerHeight - 20);
     setChangeNavColor(() => scrollY >= screenHeight - 20);
-    console.log(changeNavColor);
   };
 
   useEffect(() => {
@@ -57,16 +56,16 @@ export default function Navbar() {
                 {Object.keys(navRoute).map((route, index) => {
                     return (
                         <Link key={index} href={route}>
-                        <a
-                            className={clsx(
-                            "w-full text-center font-bold p-4 text-white",
-                            router.pathname === route
-                                ? "text-orange-400"
-                                : "text-neutral-600 hover:text-neutral-800 hover:bg-slate-200"
-                            )}
-                        >
-                            {navRoute[route]}
-                        </a>
+                            <a
+                                className={clsx(
+                                "w-full text-center font-bold p-4 text-white",
+                                router.pathname === route
+                                    ? "text-orange-400"
+                                    : "text-neutral-600 hover:text-neutral-800 hover:bg-slate-200"
+                                )}
+                            >
+                                {navRoute[route]}
+                            </a>
                         </Link>
                     );
                     })}
@@ -112,6 +111,7 @@ export default function Navbar() {
             );
             })}
         </div>
+        
     </nav>
 )
 }
