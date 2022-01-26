@@ -35,7 +35,7 @@ export default function Home({
     <>
       <div className={"snap-mandatory snap-y"}>
         <div className={clsx("snap-start relative w-full h-screen -mt-20")}>
-          <div className={clsx("max-w-7xl m-auto h-full pt-20")}>
+          <div className={clsx("max-w-7xl m-auto h-full")}>
             <div className={clsx("flex justify-center items-center h-full")}>
               <div className={clsx("flex flex-col text-white")}>
                 <motion.h1
