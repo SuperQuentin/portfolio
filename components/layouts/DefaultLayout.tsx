@@ -8,6 +8,8 @@ type DefaultLayoutProps = {
   children: ReactNode;
 };
 
+// Default layout use by each page components
+
 // eslint-disable-next-line react/display-name
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (

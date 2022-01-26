@@ -322,14 +322,18 @@ export async function getStaticProps() {
     page_size: 4,
   }); //will get 3 elements
 
+  // Notion return all objects and the api doesn't offer a proper filter so i do it after match, i only want child_page type
   blogPosts = response.results.filter(
     (post: any) => post.type === "child_page"
   );
 
   const posts = await Promise.all(
     blogPosts.map(async (post) => {
+      // Need to retreive more informations abouts the content of a child_page
       const page = await notion.pages.retrieve({ page_id: post.id });
       const content = await notion.blocks.children.list({ block_id: post.id });
+
+      // Build a new object with the information combine i need to display title, description, icon, etc...
       return {
         ...post,
         child_page: {

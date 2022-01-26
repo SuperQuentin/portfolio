@@ -28,6 +28,7 @@ export default function BlogPost({
         )}
       >
         <motion.div variants={variants}>
+          {/** use motion div to be animated in stagger by it's parent container */}
           <div
             className={clsx(
               "absolute h-full aspect-square -z-10 overflow-hidden rounded-3xl"

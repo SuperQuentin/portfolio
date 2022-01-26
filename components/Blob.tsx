@@ -39,7 +39,9 @@ export default function Blob({
       </div>
       <div className="order-1 relative w-5/12 h-72 flex-grow md:flex-grow-0 text-white z-10">
         <div className="relative flex flex-col justify-center items-center h-full">
+          {/** this is the blob, blob is your new friend */}
           <a href="#test" className="group p-16 rounded-3xl">
+            {/** link to use it later on another page or in a modal */}
             <h3 className="mb-3 font-bold text-xl">{title}</h3>
             <p className="text-sm hidden md:block">{content}</p>
             <div className="absolute -z-10 inset-4 -mt-24 ml-8">
