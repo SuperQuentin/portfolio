@@ -3,6 +3,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 
+/** Define route who will be display into the navbar */
 const navRoute = {
   "/": "Accueil",
   "/projects": "Projets",
@@ -12,6 +13,7 @@ const navRoute = {
 };
 
 export default function Navbar() {
+  /** a lot of state to monitor the status of y axis and screen size */
   const [scrollY, setScrollY] = useState(0);
   const [screenHeight, setScreenHeight] = useState(1);
   const [screenWidth, setScreenWidth] = useState(1);
@@ -24,6 +26,7 @@ export default function Navbar() {
     setScreenWidth(window.innerWidth);
   }, []);
 
+  /** handle screen resize to set isMobile state */
   useEffect(() => {
     function handleResize() {
       setScreenWidth(() => window.innerWidth);
@@ -35,6 +38,7 @@ export default function Navbar() {
 
   const isMobile = screenWidth < 1024;
 
+  /** handle scroll to check if we want to change nav colors after passing the screen height */
   const handleScroll = () => {
     isMobileShow ? setIsMobileShow(false) : null;
     setScrollY(() => window.scrollY);
@@ -47,20 +51,21 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
-  return isMobile ? (
+  return isMobile ? ( // Check if the screen is mobile to know witch menu to display
     <nav>
       <div
         className={clsx(
-          "fixed right-0 top-0 bottom-0 z-50 w-1/2 bg-slate-100 bg-opacity-80",
+          "fixed right-0 top-0 bottom-0 z-50 w-1/2 bg-white border-l-2 border-slate-100 ",
           isMobileShow ? "" : "translate-x-full",
           "transition-all"
         )}
       >
         <div
           className={clsx(
-            "flex flex-col items-center pt-20 justify-center divide-y-2 divide-slate-300"
+            "flex flex-col items-center pt-20 justify-center divide-y-2"
           )}
         >
+          {/** loop on the array of route to generate each button */}
           {Object.keys(navRoute).map((route, index) => {
             return (
               <Link key={index} href={route}>
@@ -69,7 +74,7 @@ export default function Navbar() {
                     "w-full text-center font-bold p-4 text-white",
                     router.pathname === route
                       ? "text-orange-400"
-                      : "text-neutral-600 hover:text-neutral-800 hover:bg-slate-200"
+                      : "text-neutral-600 hover:text-neutral-800 hover:bg-gray-100 transition"
                   )}
                 >
                   {navRoute[route]}
@@ -79,7 +84,7 @@ export default function Navbar() {
           })}
         </div>
       </div>
-      {isMobileShow ? (
+      {isMobileShow ? ( // Update the button to a cross when the mobile menu is display
         <button
           type={"button"}
           className={clsx(
@@ -135,16 +140,18 @@ export default function Navbar() {
       )}
     </nav>
   ) : (
+    // At the there is the normal nav menu
     <nav className={clsx("sticky top-0 z-50")}>
       <div className={clsx("flex items-center justify-center flex-wrap p-3 ")}>
         <div
           className={clsx(
             "h-full bg-white p-4 rounded-full transition",
-            changeNavColor || router.pathname !== "/"
+            changeNavColor || router.pathname !== "/" // Some black magic to just have noice background on other pages that home or after the first height scroll base on changeNavColor
               ? "bg-opacity-100"
               : "bg-opacity-0"
           )}
         >
+          {/** Same as before display each link base on navRoute array */}
           {Object.keys(navRoute).map((route, index) => {
             return (
               <Link key={index} href={route}>
