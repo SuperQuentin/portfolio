@@ -40,15 +40,18 @@ const Blog = ({ blogPosts }: { blogPosts: Array<BlogPostProps> }) => {
             "w-full flex flex-col p-4 space-y-4 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-4"
           )}
         >
+          {/** let it be simple i just do basical shit there, it juste f****ng remapping object and formating to get a nice object to display */}
+          {/** never to this again please */}
           {blogPosts.map((post) => {
             const blogPost = {};
             const page = post.child_page.page;
             blogPost.id = page.id;
-            blogPost.title = page.properties.title.title[0].text.content;
+            blogPost.title = page.properties.title.title[0].text.content; // all just for the title of a page
             blogPost.cover = page.cover[page.cover.type].url;
 
             blogPost.icon = [];
 
+            // icon can be file or emoji this isn't the same way to access it
             if ("file" in page.icon) {
               blogPost.icon.push("file");
               blogPost.icon.push(page.icon.file.url);
@@ -58,6 +61,7 @@ const Blog = ({ blogPosts }: { blogPosts: Array<BlogPostProps> }) => {
               blogPost.icon.push(page.icon.emoji);
             }
 
+            // special recipe to get the description content when there is a heading_1 with the key words "introduction" in notion page
             blogPost.description = post.child_page.content.results.find(
               (block: any, index: number, array: Array<object>) => {
                 return (

@@ -14,6 +14,9 @@ const { Client } = require("@notionhq/client");
 
 const msgWelcome = "Bienvenu sur mon portfolio";
 
+{
+  /** define the animation for all blob components */
+}
 const blob = {
   visible: {
     opacity: 1,
@@ -38,6 +41,7 @@ export default function Home({
           <div className={clsx("max-w-7xl m-auto h-full")}>
             <div className={clsx("flex justify-center items-center h-full")}>
               <div className={clsx("flex flex-col text-white")}>
+                {/** do a nice animation on the title */}
                 <motion.h1
                   id={"title"}
                   initial="hidden"
@@ -54,6 +58,7 @@ export default function Home({
                   }}
                   className={clsx("text-7xl font-bold ")}
                 >
+                  {/** generate html element for each letter to let it be animated with the parent motion.div */}
                   {msgWelcome.split("").map((char, index) => {
                     return (
                       <motion.span
@@ -101,6 +106,7 @@ export default function Home({
           >
             Articles du blog
           </div>
+          {/** motion animation div is use to display blogpost when there are in the viewport area with stagging */}
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -196,6 +202,7 @@ export default function Home({
           </motion.div>
         </div>
 
+        {/** Section with the horizontal timeline */}
         <div className={clsx("snap-start min-h-screen")}>
           <div className={"max-w-7xl h-full m-auto space-y-8 py-16 px-4"}>
             <div
