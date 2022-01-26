@@ -109,7 +109,7 @@ export default function Navbar() {
           type={"button"}
           className={clsx(
             "fixed top-4 right-4 bg-transparent p-4 rounded-lg hover:text-orange-400 transition-all z-[60]",
-            changeNavColor
+            changeNavColor || router.pathname !== "/"
               ? "text-slate-800 bg-white border border-slate-800 hover:border-orange-400"
               : "text-white"
           )}
