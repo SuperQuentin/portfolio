@@ -14,7 +14,7 @@ const Post = ({ content }: any) => {
     <div className={clsx("relative w-full h-screen -mt-20")}>
       <div className={clsx("max-w-7xl m-auto h-full")}>
         <div className={clsx("flex justify-center items-center h-full")}>
-          <h2 className={clsx("text-7xl text-slate-800 font-bold")}>
+          <h2 className={clsx("text-2xl md:text-7xl text-slate-800 font-bold")}>
             Post : {id}
           </h2>
           ;
