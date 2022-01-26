@@ -14,7 +14,9 @@ const Post = ({ content }: any) => {
     <div className={clsx("relative w-full h-screen -mt-20")}>
       <div className={clsx("max-w-7xl m-auto h-full")}>
         <div className={clsx("flex justify-center items-center h-full")}>
-          <h2 className={clsx("text-7xl text-white font-bold")}>Post : {id}</h2>
+          <h2 className={clsx("text-7xl text-slate-800 font-bold")}>
+            Post : {id}
+          </h2>
           ;
         </div>
       </div>
@@ -24,7 +26,7 @@ const Post = ({ content }: any) => {
         <Image
           layout={"fill"}
           objectFit={"cover"}
-          src={"/marcel-strauss-7DigijJqGlo-unsplash.jpg"}
+          src={"/visual-stories-micheile-t05q7TZObzc-unsplash.jpg"}
           alt="background-image"
           priority={true}
         />
