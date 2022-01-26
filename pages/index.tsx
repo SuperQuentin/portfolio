@@ -132,7 +132,7 @@ export default function Home({
               )}
             >
               {blogPosts.map((post) => {
-                const blogPost = {};
+                const blogPost: any = {};
                 const page = post.child_page.page;
                 blogPost.id = page.id;
                 blogPost.title = page.properties.title.title[0].text.content;
@@ -150,7 +150,7 @@ export default function Home({
                 }
 
                 blogPost.description = post.child_page.content.results.find(
-                  (block: any, index: number, array: Array<object>) => {
+                  (block: any, index: number, array: Array<any>) => {
                     return (
                       block.type === "paragraph" &&
                       array[index - 1].type === "heading_1" &&
@@ -335,7 +335,7 @@ export async function getStaticProps() {
   );
 
   const posts = await Promise.all(
-    blogPosts.map(async (post) => {
+    blogPosts.map(async (post: any) => {
       // Need to retreive more informations abouts the content of a child_page
       const page = await notion.pages.retrieve({ page_id: post.id });
       const content = await notion.blocks.children.list({ block_id: post.id });

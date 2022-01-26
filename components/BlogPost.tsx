@@ -10,6 +10,7 @@ export type BlogPostProps = {
   description: string;
   cover: string;
   variants: any;
+  child_page?: any;
 };
 
 export default function BlogPost({

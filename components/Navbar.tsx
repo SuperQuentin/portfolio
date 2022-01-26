@@ -3,8 +3,11 @@ import Link from "next/link";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 
+const burger = ""
+const close = ""
+
 /** Define route who will be display into the navbar */
-const navRoute = {
+const navRoute: any = {
   "/": "Accueil",
   "/projects": "Projets",
   "/blog": "Blog",

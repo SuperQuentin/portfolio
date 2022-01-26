@@ -1,6 +1,6 @@
 import DefaultLayout from "../../components/layouts/DefaultLayout";
 import BlogPost from "../../components/BlogPost";
-import { BlogPostProps } from "../components/BlogPost";
+import { BlogPostProps } from "../../components/BlogPost";
 import { ReactElement } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
@@ -43,7 +43,7 @@ const Blog = ({ blogPosts }: { blogPosts: Array<BlogPostProps> }) => {
           {/** let it be simple i just do basical shit there, it juste f****ng remapping object and formating to get a nice object to display */}
           {/** never to this again please */}
           {blogPosts.map((post) => {
-            const blogPost = {};
+            const blogPost: any = {};
             const page = post.child_page.page;
             blogPost.id = page.id;
             blogPost.title = page.properties.title.title[0].text.content; // all just for the title of a page
@@ -63,7 +63,7 @@ const Blog = ({ blogPosts }: { blogPosts: Array<BlogPostProps> }) => {
 
             // special recipe to get the description content when there is a heading_1 with the key words "introduction" in notion page
             blogPost.description = post.child_page.content.results.find(
-              (block: any, index: number, array: Array<object>) => {
+              (block: any, index: number, array: Array<any>) => {
                 return (
                   block.type === "paragraph" &&
                   array[index - 1].type === "heading_1" &&
@@ -120,7 +120,7 @@ export async function getStaticProps() {
   );
 
   const posts = await Promise.all(
-    blogPosts.map(async (post) => {
+    blogPosts.map(async (post: any) => {
       // Need to retreive more informations abouts the content of a child_page
       const page = await notion.pages.retrieve({ page_id: post.id });
       const content = await notion.blocks.children.list({ block_id: post.id });
