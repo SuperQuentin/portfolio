@@ -72,7 +72,8 @@ export default function Navbar() {
                 <a
                   className={clsx(
                     "w-full text-center font-bold p-4 text-white",
-                    router.pathname === route
+                    router.pathname === route ||
+                      (router.pathname.indexOf(route) > -1 && route !== "/")
                       ? "text-orange-400"
                       : "text-neutral-600 hover:text-neutral-800 hover:bg-gray-100 transition"
                   )}
@@ -158,7 +159,8 @@ export default function Navbar() {
                 <a
                   className={clsx(
                     "font-bold p-4 text-white",
-                    router.pathname === route
+                    router.pathname === route ||
+                      (router.pathname.indexOf(route) > -1 && route !== "/")
                       ? "text-orange-400"
                       : router.pathname === "/"
                       ? changeNavColor
